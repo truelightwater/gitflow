@@ -19,7 +19,6 @@ public class Runnable {
         bm.countMonthly("05");      // 월별 입출금 건수
                                     // 지출이 가장 높은 상위 10건
         bm.itemExpense();           // 많이 소비한 항목
+        // 데모 데이터를 생성해야 합니다.
     }
-
-
 }
