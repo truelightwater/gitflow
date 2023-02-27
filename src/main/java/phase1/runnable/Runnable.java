@@ -21,6 +21,4 @@ public class Runnable {
         bm.itemExpense();           // 많이 소비한 항목
         // 데모 데이터를 생성해야 합니다.
     }
-
-
 }
