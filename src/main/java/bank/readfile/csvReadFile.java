@@ -1,13 +1,13 @@
-package phase1;
+package bank.readfile;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ReadFile {
+public class csvReadFile implements ReadFile {
 
-    public ArrayList<ArrayList<String>> csvRead(String fileName) {
+    public ArrayList<ArrayList<String>> readFile(String fileName) {
 
         ArrayList<ArrayList<String>> arr2List = new ArrayList<ArrayList<String>>();
 

@@ -1,4 +1,6 @@
-package phase1;
+package bank;
+
+import bank.readfile.csvReadFile;
 
 import java.util.*;
 
@@ -9,8 +11,8 @@ public class BankManagement {
     final int amount_index = 2;
     final int category_index = 3;
 
-    ReadFile readFile = new ReadFile();
-    ArrayList<ArrayList<String>> arrayLists = readFile.csvRead(filename);
+    csvReadFile readFile = new csvReadFile();
+    ArrayList<ArrayList<String>> arrayLists = readFile.readFile(filename);
 
     public int sumIncome() {
          int incomeSum = 0;
