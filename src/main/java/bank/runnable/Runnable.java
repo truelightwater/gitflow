@@ -17,7 +17,6 @@ public class Runnable {
         String jsonFileName = "/Users/kuosamo/Documents/STUDY/gitflow/src/main/resources/bank-simple-data.json";
 
         data.readFile(csvFileName);
-        jsonReadFile.readFile(jsonFileName);
 
         BankManagement bm = new BankManagement();
         bm.sumIncome();             // 총 수입
@@ -29,6 +28,10 @@ public class Runnable {
                                     // 지출이 가장 높은 상위 10건
         bm.itemExpense();           // 많이 소비한 항목
         // 데모 데이터를 생성해야 합니다.
+
+        jsonReadFile.readFile(jsonFileName);
+
+
 
 
 

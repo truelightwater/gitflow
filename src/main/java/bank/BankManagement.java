@@ -15,6 +15,7 @@ public class BankManagement {
     ArrayList<ArrayList<String>> arrayLists = readFile.readFile(filename);
 
     public int sumIncome() {
+
          int incomeSum = 0;
 
         for (int index = 0; index < arrayLists.size(); index++) {

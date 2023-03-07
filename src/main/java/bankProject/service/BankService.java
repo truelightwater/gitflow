@@ -16,6 +16,7 @@ public class BankService {
         for (BankTransaction bankTransaction : bankTransactions) {
             total += bankTransaction.getAmount();
         }
+        System.out.println(total);
 
         return total;
     }
