@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class csvParser {
+
     private static final DateTimeFormatter DATE_PATTERN = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
+    // csvParser 클래스에서만 parseFromCSV 메소드를 활용하기 때문에 접근 제어자는 private 로 지정한다.
+    // 한 줄로만 파싱하기 때문에 반복문을 사용해서 list 로 담는다.
     private BankTransaction parseFromCSV(String line) {
         String[] columns = line.split(",");
 
@@ -21,6 +24,8 @@ public class csvParser {
         return new BankTransaction(id, date, amount, info);
     }
 
+
+    // 한 줄씩 파싱하고 난 뒤에 list 에 추가한다.
     public List<BankTransaction> parseLineFormCSV(List<String> lines) {
         List<BankTransaction> bankTransactions = new ArrayList<>();
 

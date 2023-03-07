@@ -1,7 +1,6 @@
 package phase1.runnable;
 
 import phase1.BankManagement;
-import phase1.ReadFile;
 
 public class Runnable {
 

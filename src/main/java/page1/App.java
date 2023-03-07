@@ -1,3 +1,5 @@
+package page1;
+
 public class App {
     public static void main(String[] args) {
         InformationDAO infoDAO = new InformationDAO();

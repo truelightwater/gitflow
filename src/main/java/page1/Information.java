@@ -1,3 +1,5 @@
+package page1;
+
 public class Information {
     private String id;
     private String date;

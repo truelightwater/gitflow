@@ -9,7 +9,7 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class ReadFile {
+public class OriginalFile {
 
     private static final String RESOURCES = "/Users/kuosamo/Documents/STUDY/gitflow/src/main/resources/bank-simple-data.csv";
 
@@ -49,7 +49,7 @@ public class ReadFile {
     }
 
     public static void main(String[] args) throws IOException {
-        ReadFile readFile = new ReadFile();
+        OriginalFile readFile = new OriginalFile();
         readFile.monthlyAmount();
         readFile.totalAmount();
     }

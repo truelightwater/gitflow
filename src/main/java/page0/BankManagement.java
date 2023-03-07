@@ -9,7 +9,7 @@ public class BankManagement {
     final int amount_index = 2;
     final int category_index = 3;
 
-    ReadFile readFile = new ReadFile();
+    phase1.ReadFile readFile = new phase1.ReadFile();
     ArrayList<ArrayList<String>> arrayLists = readFile.csvRead(filename);
 
     public int sumIncome() {
