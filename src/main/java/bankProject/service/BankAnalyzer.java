@@ -1,6 +1,7 @@
-package bankProject.model;
+package bankProject.service;
 
 import bankProject.data.Parser;
+import bankProject.model.BankTransaction;
 import bankProject.service.BankService;
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class BankAnalyzer {
+
 
     private static final String RESOURCE = "/Users/kuosamo/Documents/STUDY/gitflow/src/main/resources/";
 
