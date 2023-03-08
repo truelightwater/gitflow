@@ -21,5 +21,4 @@ public class BankService {
         return total;
     }
 
-
 }
