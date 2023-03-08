@@ -8,7 +8,6 @@ public class BankService {
     private List<BankTransaction> bankTransactions;
 
     public BankService(List<BankTransaction> bankTransactions) {
-
         this.bankTransactions = bankTransactions;
     }
 

@@ -1,7 +1,6 @@
 package bankProject.model;
 
 import bankProject.data.Parser;
-import bankProject.data.TsvParser;
 import bankProject.service.BankService;
 
 import java.io.IOException;
@@ -10,31 +9,25 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class BankAnalyser {
+public class BankAnalyzer {
 
     private static final String RESOURCE = "/Users/kuosamo/Documents/STUDY/gitflow/src/main/resources/";
 
-
-
-    public static void main(String[] args) throws IOException {
+    public void analyze(String fileName, Parser parser) throws IOException {
 
         // 파일 입출력
-        Path path = Paths.get(RESOURCE + "bank-simple-data.tsv");
+        Path path = Paths.get(RESOURCE + fileName);
         List<String> lines = Files.readAllLines(path);
 
-        // 데이터 파싱 : csvParser
-//        CsvParser csvParser = new CsvParser();
-//        List<BankTransaction> bankTransactions = csvParser.parseLineFrom(lines);
-//        BankService bankService = new BankService(bankTransactions);
-//
-//        bankService.calculateTotalAmount();
-
-        // 데이터 파싱 : tsvParser
-        Parser parser = new TsvParser();
+        // 데이터 파싱
         List<BankTransaction> bankTransactions = parser.parseLineFrom(lines);
+
+        // 입출금 총합
         BankService bankService = new BankService(bankTransactions);
 
+        // 결과
         bankService.calculateTotalAmount();
+
     }
 
 }
