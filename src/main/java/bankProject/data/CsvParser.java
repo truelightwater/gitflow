@@ -1,6 +1,7 @@
 package bankProject.data;
 
 import bankProject.model.BankTransaction;
+import bankProject.notification.BankTransactionValidator;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,12 +11,14 @@ import java.util.List;
 public class CsvParser implements Parser {
 
     private static final DateTimeFormatter DATE_PATTERN = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    BankTransactionValidator validator = new BankTransactionValidator();
 
 
     // 한 줄로만 파싱하기 때문에 반복문을 사용해서 list 로 담는다.
     @Override
     public BankTransaction parseFrom(String line) {
         String[] columns = line.split(",");
+        validator.validate();
 
         String id = columns[0];
         LocalDate date = LocalDate.parse(columns[1], DATE_PATTERN);
