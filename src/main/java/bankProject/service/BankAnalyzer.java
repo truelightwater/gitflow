@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Month;
 import java.util.List;
 
 public class BankAnalyzer {
@@ -29,6 +30,11 @@ public class BankAnalyzer {
 
         // 결과
         bankService.calculateTotalAmount();
+        bankService.IncomeExpenseAmount();
+        bankService.MonthlyAmount(Month.JANUARY);
+        bankService.CategoryAmount("커피");
+        bankService.MonthlyCountAmount(Month.FEBRUARY);
+        bankService.TopExpenseAmount();
 
     }
 

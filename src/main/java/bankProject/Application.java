@@ -23,11 +23,6 @@ public class Application {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try {
-            bankAnalyzer.analyze("bank-simple-data.tsv", tsvParser);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
 
     }
