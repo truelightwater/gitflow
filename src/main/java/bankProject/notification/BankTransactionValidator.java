@@ -11,6 +11,7 @@ public class BankTransactionValidator {
     private String info;
     private static final DateTimeFormatter DATE_PATTERN = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
+
     public BankTransactionValidator() {
         this.date = date;
         this.amount = amount;
