@@ -46,7 +46,7 @@ public class BankService {
 
     }
 
-    public void MonthlyAmount(Month month) {
+    public int MonthlyAmount(Month month) {
         int total = 0;
 
         for (BankTransaction bankTransaction : bankTransactions) {
@@ -61,9 +61,11 @@ public class BankService {
 
         // 각 개월마다의 총합
         log.info(String.valueOf(total));
+
+        return total;
     }
 
-    public void CategoryAmount(String msg) {
+    public int CategoryAmount(String msg) {
         int total = 0;
 
         for (BankTransaction bankTransaction : bankTransactions) {
@@ -75,9 +77,11 @@ public class BankService {
 
         // 카테고리별 총 입출금
         log.info(String.valueOf(total));
+
+        return total;
     }
 
-    public void MonthlyCountAmount(Month month) {
+    public int MonthlyCountAmount(Month month) {
         int count = 0;
 
         for (BankTransaction bankTransaction : bankTransactions) {
@@ -88,9 +92,11 @@ public class BankService {
 
         // 각 개월마다의 입출금 횟수
         log.info(String.valueOf(count));
+
+        return count;
     }
 
-    public void TopExpenseAmount() {
+    public String TopExpenseAmount() {
         Map<String, Integer> listMap = new HashMap<>();
 
         for (BankTransaction bankTransaction : bankTransactions) {
@@ -135,5 +141,7 @@ public class BankService {
         }
 
         log.info(minKey);
+
+        return minKey;
     }
 }
