@@ -18,11 +18,7 @@ public class Application {
         Parser csvParser = new CsvParser();
         Parser tsvParser = new TsvParser();
 
-        try {
-            bankAnalyzer.analyze("bank-simple-data.csv", csvParser);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        bankAnalyzer.analyze("bank-simple-data.csv", csvParser);
 
 
     }

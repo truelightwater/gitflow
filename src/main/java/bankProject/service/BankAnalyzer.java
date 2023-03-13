@@ -13,14 +13,19 @@ import java.util.List;
 
 public class BankAnalyzer {
 
-
     private static final String RESOURCE = "/Users/kuosamo/Documents/STUDY/gitflow/src/main/resources/";
 
-    public void analyze(String fileName, Parser parser) throws IOException {
+    public void analyze(String fileName, Parser parser) {
 
         // 파일 입출력
         Path path = Paths.get(RESOURCE + fileName);
-        List<String> lines = Files.readAllLines(path);
+        List<String> lines = null;
+
+        try {
+            lines = Files.readAllLines(path);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         // 데이터 파싱
         List<BankTransaction> bankTransactions = parser.parseLineFrom(lines);
