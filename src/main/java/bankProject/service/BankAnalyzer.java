@@ -34,8 +34,9 @@ public class BankAnalyzer {
         BankService bankService = new BankService(bankTransactions);
 
         // 결과
-        bankService.calculateTotalAmount();
-        bankService.IncomeExpenseAmount();
+        bankService.totalAmount();
+        bankService.IncomeAmount();
+        bankService.ExpenseAmount();
         bankService.MonthlyAmount(Month.JANUARY);
         bankService.CategoryAmount("커피");
         bankService.MonthlyCountAmount(Month.FEBRUARY);

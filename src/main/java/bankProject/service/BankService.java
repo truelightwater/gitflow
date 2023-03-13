@@ -17,42 +17,37 @@ public class BankService {
         this.bankTransactions = bankTransactions;
     }
 
-    public int calculateTotalAmount() {
-        int total = 0;
-        for (BankTransaction bankTransaction : bankTransactions) {
-            total += bankTransaction.getAmount();
-        }
+    public int totalAmount() {
+        Integer total = bankTransactions.stream()
+                .map(BankTransaction::getAmount)
+                .reduce(0, Integer::sum);
+
         // 총 입출금
         log.info(String.valueOf(total));
-
-
-        List<Integer> collect = bankTransactions.stream()
-                .filter(amount -> amount.getAmount() > 0)
-                .map(BankTransaction::getAmount)
-                .collect(Collectors.toList());
-
-        System.out.println(collect);
-
 
         return total;
     }
 
-    public void IncomeExpenseAmount() {
+    public void IncomeAmount() {
 
-        int income = 0;
-        int expense = 0;
-        for (BankTransaction bankTransaction : bankTransactions) {
-            if (0 < bankTransaction.getAmount()) {
-                income += bankTransaction.getAmount();
-            } else {
-                expense += bankTransaction.getAmount();
-            }
-        }
+        Integer income = bankTransactions.stream()
+                .filter(amount -> amount.getAmount() > 0)
+                .map(BankTransaction::getAmount)
+                .reduce(0, Integer::sum);
 
-        // 총 수입과 총 지출
+        // 총 수입
         log.info(String.valueOf(income));
-        log.info(String.valueOf(expense));
 
+    }
+
+    public void ExpenseAmount() {
+        Integer expense = bankTransactions.stream()
+                .filter(amount -> amount.getAmount() < 0)
+                .map(BankTransaction::getAmount)
+                .reduce(0, Integer::sum);
+
+        // 총 지출
+        log.info(String.valueOf(expense));
     }
 
     public int MonthlyAmount(Month month) {
