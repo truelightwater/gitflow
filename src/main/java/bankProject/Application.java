@@ -5,9 +5,6 @@ import bankProject.data.Parser;
 import bankProject.data.TsvParser;
 import bankProject.service.BankAnalyzer;
 
-import java.io.IOException;
-
-
 public class Application {
 
     public static void main(String[] args)  {

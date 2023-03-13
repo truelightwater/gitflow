@@ -39,6 +39,7 @@ public class BankAnalyzer {
         bankService.MonthlyAmount(Month.JANUARY);
         bankService.CategoryAmount("커피");
         bankService.MonthlyCountAmount(Month.FEBRUARY);
+        bankService.TopThreeExpenseAmount();
         bankService.TopExpenseAmount();
 
     }

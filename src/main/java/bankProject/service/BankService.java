@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.Month;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class BankService {
 
@@ -21,9 +22,17 @@ public class BankService {
         for (BankTransaction bankTransaction : bankTransactions) {
             total += bankTransaction.getAmount();
         }
-
         // 총 입출금
         log.info(String.valueOf(total));
+
+
+        List<Integer> collect = bankTransactions.stream()
+                .filter(amount -> amount.getAmount() > 0)
+                .map(BankTransaction::getAmount)
+                .collect(Collectors.toList());
+
+        System.out.println(collect);
+
 
         return total;
     }
@@ -96,52 +105,32 @@ public class BankService {
         return count;
     }
 
-    public String TopExpenseAmount() {
-        Map<String, Integer> listMap = new HashMap<>();
+    public List<String> TopThreeExpenseAmount() {
+        List<String> result = bankTransactions.stream()
+                .filter(amount -> amount.getAmount() < 0)
+                .sorted(Comparator.comparing(BankTransaction::getAmount))
+                .map(BankTransaction::getInfo)
+                .limit(3)
+                .collect(Collectors.toList());
 
-        for (BankTransaction bankTransaction : bankTransactions) {
-            if (0 > bankTransaction.getAmount()) {
-                listMap.put(bankTransaction.getInfo(), null);
-            }
-        }
+        // 지출이 높은 상위 3위
+        log.info(result.toString());
 
-        int groceryTotal = 0;
-        int storeTotal = 0;
-        int bookTotal = 0;
-        int coffeeTotal = 0;
-        for (BankTransaction bankTransaction : bankTransactions) {
-            if (0 > bankTransaction.getAmount()) {
+        return result;
+    }
 
-                if (bankTransaction.getInfo().equals("식료품")) {
+    public List<String> TopExpenseAmount() {
 
-                    groceryTotal += bankTransaction.getAmount();
-                    listMap.put(bankTransaction.getInfo(), groceryTotal);
+        List<String> result = bankTransactions.stream()
+                .filter(amount -> amount.getAmount() < 0)
+                .sorted(Comparator.comparing(BankTransaction::getAmount))
+                .map(BankTransaction::getInfo)
+                .limit(1)
+                .collect(Collectors.toList());
 
-                } else if (bankTransaction.getInfo().equals("편의점")) {
-                    storeTotal += bankTransaction.getAmount();
-                    listMap.put(bankTransaction.getInfo(), storeTotal);
+        // 지출이 가장 많은 항목
+        log.info(result.toString());
 
-                } else if (bankTransaction.getInfo().equals("서점")) {
-                    bookTotal += bankTransaction.getAmount();
-                    listMap.put(bankTransaction.getInfo(), bookTotal);
-
-                } else if (bankTransaction.getInfo().equals("커피")) {
-                    coffeeTotal += bankTransaction.getAmount();
-                    listMap.put(bankTransaction.getInfo(), coffeeTotal);
-
-                }
-            }
-        }
-
-        String minKey = null;
-        for (String key : listMap.keySet()) {
-            if (minKey == null || listMap.get(key) < listMap.get(minKey)) {
-                minKey = key;
-            }
-        }
-
-        log.info(minKey);
-
-        return minKey;
+        return result;
     }
 }
