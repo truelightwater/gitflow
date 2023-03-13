@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class BankService {
 
@@ -51,53 +52,40 @@ public class BankService {
     }
 
     public int MonthlyAmount(Month month) {
-        int total = 0;
 
-        for (BankTransaction bankTransaction : bankTransactions) {
-            if (month == bankTransaction.getDate().getMonth()) {
-                total += bankTransaction.getAmount();
-            } else if (month == bankTransaction.getDate().getMonth()) {
-                total += bankTransaction.getAmount();
-            } else if (month == bankTransaction.getDate().getMonth()) {
-                total += bankTransaction.getAmount();
-            }
-        }
+        Integer monthlyTotal = bankTransactions.stream()
+                .filter(monthlyAmount -> monthlyAmount.getDate().getMonth() == month)
+                .map(BankTransaction::getAmount)
+                .reduce(0, Integer::sum);
 
         // 각 개월마다의 총합
-        log.info(String.valueOf(total));
-
-        return total;
+        log.info(String.valueOf(monthlyTotal));
+        return monthlyTotal;
     }
 
     public int CategoryAmount(String msg) {
-        int total = 0;
 
-        for (BankTransaction bankTransaction : bankTransactions) {
-
-            if (msg.equals(bankTransaction.getInfo())) {
-                total += bankTransaction.getAmount();
-            }
-        }
+        Integer categoryTotal = bankTransactions.stream()
+                .filter(infoAmount -> infoAmount.getInfo().equals(msg))
+                .map(BankTransaction::getAmount)
+                .reduce(0, Integer::sum);
 
         // 카테고리별 총 입출금
-        log.info(String.valueOf(total));
+        log.info(String.valueOf(categoryTotal));
 
-        return total;
+        return categoryTotal;
     }
 
-    public int MonthlyCountAmount(Month month) {
-        int count = 0;
+    public long MonthlyCountAmount(Month month) {
 
-        for (BankTransaction bankTransaction : bankTransactions) {
-            if (month == bankTransaction.getDate().getMonth()) {
-                count++;
-            }
-        }
+        long monthlyCountTotal = bankTransactions.stream()
+                .filter(monthlyCount -> monthlyCount.getDate().getMonth() == month)
+                .map(BankTransaction::getId).count();
 
         // 각 개월마다의 입출금 횟수
-        log.info(String.valueOf(count));
+        log.info(String.valueOf(monthlyCountTotal));
 
-        return count;
+        return monthlyCountTotal;
     }
 
     public List<String> TopThreeExpenseAmount() {
