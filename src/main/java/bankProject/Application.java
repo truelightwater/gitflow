@@ -3,13 +3,11 @@ package bankProject;
 import bankProject.data.CsvParser;
 import bankProject.data.Parser;
 import bankProject.data.TsvParser;
-import bankProject.model.BankAnalyzer;
-
-import java.io.IOException;
+import bankProject.service.BankAnalyzer;
 
 public class Application {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)  {
 
         BankAnalyzer bankAnalyzer = new BankAnalyzer();
 
@@ -18,8 +16,6 @@ public class Application {
         Parser tsvParser = new TsvParser();
 
         bankAnalyzer.analyze("bank-simple-data.csv", csvParser);
-        bankAnalyzer.analyze("bank-simple-data.tsv", tsvParser);
-
 
 
     }
