@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class BankService {
 
@@ -15,20 +14,21 @@ public class BankService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     public BankService(List<BankTransaction> bankTransactions) {
-        this.bankTransactions = bankTransactions;
+         this.bankTransactions = bankTransactions;
     }
 
+    // 총 입금, 출금 내역
     public int totalAmount() {
         Integer total = bankTransactions.stream()
                 .map(BankTransaction::getAmount)
                 .reduce(0, Integer::sum);
 
-        // 총 입출금
         log.info(String.valueOf(total));
 
         return total;
     }
 
+    // 총 수입 내역
     public void IncomeAmount() {
 
         Integer income = bankTransactions.stream()
@@ -36,21 +36,21 @@ public class BankService {
                 .map(BankTransaction::getAmount)
                 .reduce(0, Integer::sum);
 
-        // 총 수입
         log.info(String.valueOf(income));
 
     }
 
+    // 총 지출 내역
     public void ExpenseAmount() {
         Integer expense = bankTransactions.stream()
                 .filter(amount -> amount.getAmount() < 0)
                 .map(BankTransaction::getAmount)
                 .reduce(0, Integer::sum);
 
-        // 총 지출
         log.info(String.valueOf(expense));
     }
 
+    // 각 개월마다의 총합
     public int MonthlyAmount(Month month) {
 
         Integer monthlyTotal = bankTransactions.stream()
@@ -58,11 +58,11 @@ public class BankService {
                 .map(BankTransaction::getAmount)
                 .reduce(0, Integer::sum);
 
-        // 각 개월마다의 총합
         log.info(String.valueOf(monthlyTotal));
         return monthlyTotal;
     }
 
+    // 카테고리별 총 입출금
     public int CategoryAmount(String msg) {
 
         Integer categoryTotal = bankTransactions.stream()
@@ -70,24 +70,24 @@ public class BankService {
                 .map(BankTransaction::getAmount)
                 .reduce(0, Integer::sum);
 
-        // 카테고리별 총 입출금
         log.info(String.valueOf(categoryTotal));
 
         return categoryTotal;
     }
 
+    // 각 개월마다의 입출금 횟수
     public long MonthlyCountAmount(Month month) {
 
         long monthlyCountTotal = bankTransactions.stream()
                 .filter(monthlyCount -> monthlyCount.getDate().getMonth() == month)
                 .map(BankTransaction::getId).count();
 
-        // 각 개월마다의 입출금 횟수
         log.info(String.valueOf(monthlyCountTotal));
 
         return monthlyCountTotal;
     }
 
+    // 지출이 높은 상위 3건
     public List<String> TopThreeExpenseAmount() {
         List<String> result = bankTransactions.stream()
                 .filter(amount -> amount.getAmount() < 0)
@@ -96,12 +96,12 @@ public class BankService {
                 .limit(3)
                 .collect(Collectors.toList());
 
-        // 지출이 높은 상위 3위
         log.info(result.toString());
 
         return result;
     }
 
+    // 지출이 가장 많은 항목
     public List<String> TopExpenseAmount() {
 
         List<String> result = bankTransactions.stream()
@@ -111,9 +111,25 @@ public class BankService {
                 .limit(1)
                 .collect(Collectors.toList());
 
-        // 지출이 가장 많은 항목
         log.info(result.toString());
 
         return result;
     }
+
+    // 특정 개월의 금액 이상의 은행거래
+    public List<BankTransaction> findTransactions(BankTransactionFilter bankTransactionFilter) {
+
+        List<BankTransaction> result = new ArrayList<>();
+
+        for (BankTransaction bankTransaction : bankTransactions) {
+            if (bankTransactionFilter.test(bankTransaction)) {
+                result.add(bankTransaction);
+            }
+        }
+
+        log.info(result.toString());
+
+        return result;
+    }
+
 }

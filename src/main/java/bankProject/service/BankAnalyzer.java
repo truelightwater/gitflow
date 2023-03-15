@@ -2,7 +2,6 @@ package bankProject.service;
 
 import bankProject.data.Parser;
 import bankProject.model.BankTransaction;
-import bankProject.service.BankService;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,22 +14,17 @@ public class BankAnalyzer {
 
     private static final String RESOURCE = "/Users/kuosamo/Documents/STUDY/gitflow/src/main/resources/";
 
-    public void analyze(String fileName, Parser parser) {
+    public void analyze(String fileName, Parser parser) throws IOException {
 
         // 파일 입출력
         Path path = Paths.get(RESOURCE + fileName);
         List<String> lines = null;
-
-        try {
-            lines = Files.readAllLines(path);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        lines = Files.readAllLines(path);
 
         // 데이터 파싱
         List<BankTransaction> bankTransactions = parser.parseLineFrom(lines);
 
-        // 입출금 총합
+        // 입출금 처리 로직
         BankService bankService = new BankService(bankTransactions);
 
         // 결과
@@ -42,6 +36,10 @@ public class BankAnalyzer {
         bankService.MonthlyCountAmount(Month.FEBRUARY);
         bankService.TopThreeExpenseAmount();
         bankService.TopExpenseAmount();
+
+        /* 별도의 클래스를 만들지 않고, 람다 표현식으로 이름없이 인터페이스 구현 객체를 코드 블록형태로 전달 */
+        bankService.findTransactions(bankTransaction ->
+                bankTransaction.getDate().getMonth() == Month.FEBRUARY && bankTransaction.getAmount() > 500000);
 
     }
 

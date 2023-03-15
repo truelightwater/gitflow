@@ -5,9 +5,13 @@ import bankProject.data.Parser;
 import bankProject.data.TsvParser;
 import bankProject.service.BankAnalyzer;
 
+import java.io.IOException;
+
 public class Application {
 
-    public static void main(String[] args)  {
+    private static final String RESOURCE = "/Users/kuosamo/Documents/STUDY/gitflow/src/main/resources/bank-simple-data.csv";
+
+    public static void main(String[] args) throws IOException {
 
         BankAnalyzer bankAnalyzer = new BankAnalyzer();
 
@@ -16,6 +20,7 @@ public class Application {
         Parser tsvParser = new TsvParser();
 
         bankAnalyzer.analyze("bank-simple-data.csv", csvParser);
+
 
 
     }

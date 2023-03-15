@@ -12,7 +12,6 @@ public class CsvParser implements Parser {
 
     private static final DateTimeFormatter DATE_PATTERN = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-
     // 한 줄로만 파싱하기 때문에 반복문을 사용해서 list 로 담는다.
     @Override
     public BankTransaction parseFrom(String line) {
