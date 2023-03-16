@@ -1,5 +1,6 @@
 package bankProject.service;
 
+import bankProject.export.SummaryStatistics;
 import bankProject.model.BankTransaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,18 @@ public class BankService {
 
     public BankService(List<BankTransaction> bankTransactions) {
          this.bankTransactions = bankTransactions;
+    }
+
+    public SummaryStatistics summaryTransaction() {
+
+        final IntSummaryStatistics intSummaryStatistics = bankTransactions.stream()
+                .mapToInt(BankTransaction::getAmount)
+                .summaryStatistics();
+
+        return new SummaryStatistics(intSummaryStatistics.getSum(),
+                                     intSummaryStatistics.getMax(),
+                                     intSummaryStatistics.getMin(),
+                                     intSummaryStatistics.getAverage());
     }
 
     // 총 입금, 출금 내역
@@ -131,5 +144,7 @@ public class BankService {
 
         return result;
     }
+
+
 
 }
