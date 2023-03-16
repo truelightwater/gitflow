@@ -15,12 +15,12 @@ import java.util.List;
 
 public class BankAnalyzer {
 
-    File csvPath = new File("./src/main/resources");
+    File relativePath = new File("./src/main/resources");
 
     public void analyze(String fileName, Parser parser, Exporter exporter) throws IOException {
 
         // 파일 입출력
-        Path path = Paths.get(csvPath + fileName);
+        Path path = Paths.get(relativePath + fileName);
         List<String> lines = null;
         lines = Files.readAllLines(path);
 
