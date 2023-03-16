@@ -24,7 +24,5 @@ public class Application {
 
         bankAnalyzer.analyze("bank-simple-data.csv", csvParser, exporter);
 
-
-
     }
 }

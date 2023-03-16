@@ -45,6 +45,7 @@ public class BankAnalyzer {
 
         SummaryStatistics summaryStatistics = bankService.summaryTransaction();
 
+        System.out.println("Html 내보내기 : ");
         System.out.println(exporter.export(summaryStatistics));
 
     }

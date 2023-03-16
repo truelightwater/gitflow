@@ -18,18 +18,6 @@ public class BankService {
          this.bankTransactions = bankTransactions;
     }
 
-    public SummaryStatistics summaryTransaction() {
-
-        final IntSummaryStatistics intSummaryStatistics = bankTransactions.stream()
-                .mapToInt(BankTransaction::getAmount)
-                .summaryStatistics();
-
-        return new SummaryStatistics(intSummaryStatistics.getSum(),
-                                     intSummaryStatistics.getMax(),
-                                     intSummaryStatistics.getMin(),
-                                     intSummaryStatistics.getAverage());
-    }
-
     // 총 입금, 출금 내역
     public int totalAmount() {
         Integer total = bankTransactions.stream()
@@ -144,6 +132,26 @@ public class BankService {
 
         return result;
     }
+
+    // 기본적인 통계내용 요약
+    public SummaryStatistics summaryTransaction() {
+
+        final IntSummaryStatistics intSummaryStatistics = bankTransactions.stream()
+                .mapToInt(BankTransaction::getAmount)
+                .summaryStatistics();
+
+
+        log.info(String.valueOf(intSummaryStatistics.getSum()));
+        log.info(String.valueOf(intSummaryStatistics.getMax()));
+        log.info(String.valueOf(intSummaryStatistics.getMin()));
+        log.info(String.valueOf(intSummaryStatistics.getAverage()));
+
+        return new SummaryStatistics(intSummaryStatistics.getSum(),
+                intSummaryStatistics.getMax(),
+                intSummaryStatistics.getMin(),
+                intSummaryStatistics.getAverage());
+    }
+
 
 
 
