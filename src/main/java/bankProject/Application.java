@@ -11,8 +11,6 @@ import java.io.IOException;
 
 public class Application {
 
-    private static final String RESOURCE = "/Users/kuosamo/Documents/STUDY/gitflow/src/main/resources/bank-simple-data.csv";
-
     public static void main(String[] args) throws IOException {
 
         BankAnalyzer bankAnalyzer = new BankAnalyzer();
@@ -22,7 +20,7 @@ public class Application {
         Parser csvParser = new CsvParser();
         Parser tsvParser = new TsvParser();
 
-        bankAnalyzer.analyze("bank-simple-data.csv", csvParser, exporter);
+        bankAnalyzer.analyze("/bank-simple-data.csv", csvParser, exporter);
 
     }
 }

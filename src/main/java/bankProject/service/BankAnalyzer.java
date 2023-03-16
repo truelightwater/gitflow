@@ -5,6 +5,7 @@ import bankProject.export.Exporter;
 import bankProject.export.SummaryStatistics;
 import bankProject.model.BankTransaction;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,12 +15,12 @@ import java.util.List;
 
 public class BankAnalyzer {
 
-    private static final String RESOURCE = "/Users/kuosamo/Documents/STUDY/gitflow/src/main/resources/";
+    File csvPath = new File("./src/main/resources");
 
     public void analyze(String fileName, Parser parser, Exporter exporter) throws IOException {
 
         // 파일 입출력
-        Path path = Paths.get(RESOURCE + fileName);
+        Path path = Paths.get(csvPath + fileName);
         List<String> lines = null;
         lines = Files.readAllLines(path);
 
