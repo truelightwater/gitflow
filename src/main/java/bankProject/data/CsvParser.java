@@ -1,7 +1,6 @@
 package bankProject.data;
 
 import bankProject.model.BankTransaction;
-import bankProject.notification.BankTransactionValidator;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

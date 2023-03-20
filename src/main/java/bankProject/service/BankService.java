@@ -20,9 +20,9 @@ public class BankService {
 
     // 총 입금, 출금 내역
     public int totalAmount() {
-        Integer total = bankTransactions.stream()
-                .map(BankTransaction::getAmount)
-                .reduce(0, Integer::sum);
+        int total = bankTransactions.stream()
+                                     .mapToInt(BankTransaction::getAmount)
+                                     .sum();
 
         log.info(String.valueOf(total));
 
@@ -30,41 +30,78 @@ public class BankService {
     }
 
     // 총 수입 내역
-    public void IncomeAmount() {
-
-        Integer income = bankTransactions.stream()
-                .filter(amount -> amount.getAmount() > 0)
-                .map(BankTransaction::getAmount)
-                .reduce(0, Integer::sum);
+    public void incomeAmount() {
+        int income = bankTransactions.stream()
+                                     .filter(amount -> amount.getAmount() > 0)
+                                     .mapToInt(BankTransaction::getAmount)
+                                     .sum();
 
         log.info(String.valueOf(income));
 
     }
 
     // 총 지출 내역
-    public void ExpenseAmount() {
-        Integer expense = bankTransactions.stream()
+    public void expenseAmount() {
+        int expense = bankTransactions.stream()
                 .filter(amount -> amount.getAmount() < 0)
-                .map(BankTransaction::getAmount)
-                .reduce(0, Integer::sum);
+                .mapToInt(BankTransaction::getAmount)
+                .sum();
 
         log.info(String.valueOf(expense));
     }
 
     // 각 개월마다의 총합
-    public int MonthlyAmount(Month month) {
+    public int monthlyAmount(Month month) {
 
-        Integer monthlyTotal = bankTransactions.stream()
-                .filter(monthlyAmount -> monthlyAmount.getDate().getMonth() == month)
-                .map(BankTransaction::getAmount)
-                .reduce(0, Integer::sum);
+        if (month == null) {
+            throw new NullPointerException("month should not be null");
+        }
 
+        int monthlyTotal = bankTransactions.stream()
+                                            .filter(monthlyAmount -> monthlyAmount.getDate().getMonth() == month)
+                                            .mapToInt(BankTransaction::getAmount)
+                                            .sum();
         log.info(String.valueOf(monthlyTotal));
+
         return monthlyTotal;
     }
 
+    // 각 개월의 수익금
+    public int monthlyIncome(Month month) {
+        if (month == null) {
+            throw new NullPointerException("month should not be null");
+        }
+
+        int monthlyIncomeAmount = bankTransactions.stream()
+                .filter(monthIncomeAmount -> monthIncomeAmount.getDate().getMonth() == month)
+                .mapToInt(BankTransaction::getAmount)
+                .filter(amount -> amount > 0)
+                .sum();
+
+        log.info(String.valueOf(monthlyIncomeAmount));
+
+        return monthlyIncomeAmount;
+    }
+
+    // 각 개월의 지출금
+    public int monthlyExpense(Month month) {
+        if (month == null) {
+            throw new NullPointerException("month should not be null");
+        }
+
+        int monthlyExpenseAmount = bankTransactions.stream()
+                .filter(monthIncomeAmount -> monthIncomeAmount.getDate().getMonth() == month)
+                .mapToInt(BankTransaction::getAmount)
+                .filter(amount -> amount < 0)
+                .sum();
+
+        log.info(String.valueOf(monthlyExpenseAmount));
+
+        return monthlyExpenseAmount;
+    }
+
     // 카테고리별 총 입출금
-    public int CategoryAmount(String msg) {
+    public int categoryAmount(String msg) {
 
         Integer categoryTotal = bankTransactions.stream()
                 .filter(infoAmount -> infoAmount.getInfo().equals(msg))
@@ -77,7 +114,7 @@ public class BankService {
     }
 
     // 각 개월마다의 입출금 횟수
-    public long MonthlyCountAmount(Month month) {
+    public long monthlyCountAmount(Month month) {
 
         long monthlyCountTotal = bankTransactions.stream()
                 .filter(monthlyCount -> monthlyCount.getDate().getMonth() == month)
@@ -89,7 +126,7 @@ public class BankService {
     }
 
     // 지출이 높은 상위 3건
-    public List<String> TopThreeExpenseAmount() {
+    public List<String> topThreeExpenseAmount() {
         List<String> result = bankTransactions.stream()
                 .filter(amount -> amount.getAmount() < 0)
                 .sorted(Comparator.comparing(BankTransaction::getAmount))
@@ -103,7 +140,7 @@ public class BankService {
     }
 
     // 지출이 가장 많은 항목
-    public List<String> TopExpenseAmount() {
+    public List<String> topExpenseAmount() {
 
         List<String> result = bankTransactions.stream()
                 .filter(amount -> amount.getAmount() < 0)
@@ -145,6 +182,8 @@ public class BankService {
         log.info(String.valueOf(intSummaryStatistics.getMax()));
         log.info(String.valueOf(intSummaryStatistics.getMin()));
         log.info(String.valueOf(intSummaryStatistics.getAverage()));
+
+
 
         return new SummaryStatistics(intSummaryStatistics.getSum(),
                 intSummaryStatistics.getMax(),

@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class Application {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         BankAnalyzer bankAnalyzer = new BankAnalyzer();
         Exporter exporter = new HtmlExporter();
