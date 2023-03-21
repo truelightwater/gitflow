@@ -30,7 +30,7 @@ public class BankService {
     }
 
     // 총 수입 내역
-    public void incomeAmount() {
+    public int incomeAmount() {
         int income = bankTransactions.stream()
                                      .filter(amount -> amount.getAmount() > 0)
                                      .mapToInt(BankTransaction::getAmount)
@@ -38,16 +38,19 @@ public class BankService {
 
         log.info(String.valueOf(income));
 
+        return income;
     }
 
     // 총 지출 내역
-    public void expenseAmount() {
+    public int expenseAmount() {
         int expense = bankTransactions.stream()
                 .filter(amount -> amount.getAmount() < 0)
                 .mapToInt(BankTransaction::getAmount)
                 .sum();
 
         log.info(String.valueOf(expense));
+
+        return expense;
     }
 
     // 각 개월마다의 총합

@@ -7,8 +7,6 @@ import bankProject.export.Exporter;
 import bankProject.export.HtmlExporter;
 import bankProject.service.BankAnalyzer;
 
-import java.io.IOException;
-
 public class Application {
 
     public static void main(String[] args) {
