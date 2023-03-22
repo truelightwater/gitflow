@@ -4,6 +4,8 @@ import bankProject.data.Parser;
 import bankProject.export.Exporter;
 import bankProject.export.SummaryStatistics;
 import bankProject.model.BankTransaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,6 +20,7 @@ import java.util.List;
 public class BankAnalyzer {
 
     File relativePath = new File("./src/main/resources");
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     public void analyze(String fileName, Parser parser, Exporter exporter) {
 
@@ -28,8 +31,9 @@ public class BankAnalyzer {
         try {
             lines = Files.readAllLines(path);
         } catch (FileNotFoundException | AccessDeniedException exception) {
-            exception.printStackTrace();
+            log.error("파일을 찾을 수 없거나 액세스 권한이 없습니다.", exception);
         } catch (IOException e) {
+            log.error("파일을 읽을 수 없습니다. ", e);
             throw new RuntimeException(e);
         }
 
@@ -48,8 +52,7 @@ public class BankAnalyzer {
         bankService.monthlyExpense(Month.FEBRUARY);
         bankService.categoryAmount("커피");
         bankService.monthlyCountAmount(Month.FEBRUARY);
-        bankService.topThreeExpenseAmount();
-        bankService.topExpenseAmount();
+        bankService.topExpenseAmount(3);
 
 
         /* 별도의 클래스를 만들지 않고, 람다 표현식으로 이름없이 인터페이스 구현 객체를 코드 블록형태로 전달 */

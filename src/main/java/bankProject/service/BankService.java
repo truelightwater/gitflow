@@ -64,6 +64,27 @@ public class BankService {
                                             .filter(monthlyAmount -> monthlyAmount.getDate().getMonth() == month)
                                             .mapToInt(BankTransaction::getAmount)
                                             .sum();
+
+        // 데이터가 없는 경우 - 1
+        int monthlyTotal1 = bankTransactions.stream()
+                .filter(amountMonthly -> amountMonthly.getDate().getMonth() == month)
+                        .mapToInt(amountMonthly -> {
+                            Integer amount = amountMonthly.getAmount();
+                            if (amount == null) {
+                                log.warn("Transaction amount is null " +amountMonthly.toString());
+                            }
+                            return amount;
+                        }).sum();
+
+        // 데이터가 없는 경우 - 2
+        int monthlyTotal2 = bankTransactions.stream()
+                .filter(transaction -> transaction.getDate().getMonth() == month)
+                .map(transaction -> Optional.ofNullable(transaction.getAmount()))
+                .filter(Optional::isPresent)
+                .mapToInt(Optional::get)
+                .sum();
+
+
         log.info(String.valueOf(monthlyTotal));
 
         return monthlyTotal;
@@ -106,10 +127,19 @@ public class BankService {
     // 카테고리별 총 입출금
     public int categoryAmount(String msg) {
 
-        Integer categoryTotal = bankTransactions.stream()
+        int categoryTotal = bankTransactions.stream()
                 .filter(infoAmount -> infoAmount.getInfo().equals(msg))
                 .map(BankTransaction::getAmount)
                 .reduce(0, Integer::sum);
+
+
+        // 데이터가 없는 경우
+        int categoryTotal2 = bankTransactions.stream()
+                .filter(infoAmount -> infoAmount.getInfo().equals(msg))
+                .map(infoAmount -> Optional.ofNullable(infoAmount.getAmount()))
+                .filter(Optional::isPresent)
+                .mapToInt(Optional::get)
+                .sum();
 
         log.info(String.valueOf(categoryTotal));
 
@@ -143,13 +173,13 @@ public class BankService {
     }
 
     // 지출이 가장 많은 항목
-    public List<String> topExpenseAmount() {
+    public List<String> topExpenseAmount(int count) {
 
         List<String> result = bankTransactions.stream()
                 .filter(amount -> amount.getAmount() < 0)
                 .sorted(Comparator.comparing(BankTransaction::getAmount))
                 .map(BankTransaction::getInfo)
-                .limit(1)
+                .limit(count)
                 .collect(Collectors.toList());
 
         log.info(result.toString());
@@ -180,18 +210,18 @@ public class BankService {
                 .mapToInt(BankTransaction::getAmount)
                 .summaryStatistics();
 
-
         log.info(String.valueOf(intSummaryStatistics.getSum()));
         log.info(String.valueOf(intSummaryStatistics.getMax()));
         log.info(String.valueOf(intSummaryStatistics.getMin()));
         log.info(String.valueOf(intSummaryStatistics.getAverage()));
 
 
+//        return new SummaryStatistics(intSummaryStatistics.getSum(),
+//                intSummaryStatistics.getMax(),
+//                intSummaryStatistics.getMin(),
+//                intSummaryStatistics.getAverage());
 
-        return new SummaryStatistics(intSummaryStatistics.getSum(),
-                intSummaryStatistics.getMax(),
-                intSummaryStatistics.getMin(),
-                intSummaryStatistics.getAverage());
+        return new SummaryStatistics(intSummaryStatistics);
     }
 
 

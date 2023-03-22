@@ -1,5 +1,7 @@
 package bankProject.export;
 
+import java.util.IntSummaryStatistics;
+
 public class SummaryStatistics {
 
     private final long sum;
@@ -7,11 +9,11 @@ public class SummaryStatistics {
     private final int min;
     private final double average;
 
-    public SummaryStatistics(long sum, int max, int min, double average) {
-        this.sum = sum;
-        this.max = max;
-        this.min = min;
-        this.average = average;
+    public SummaryStatistics(IntSummaryStatistics intSummaryStatistics) {
+        this.sum = intSummaryStatistics.getSum();
+        this.max = intSummaryStatistics.getMax();
+        this.min = intSummaryStatistics.getMin();
+        this.average = intSummaryStatistics.getAverage();
     }
 
     public long getSum() {
