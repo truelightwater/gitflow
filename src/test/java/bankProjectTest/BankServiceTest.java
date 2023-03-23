@@ -36,8 +36,8 @@ public class BankServiceTest {
     void totalAmountTest() throws IOException {
         BankService bankService = readFile();
 
-        String[] strArr3 = {"식료품", "커피", "서점"};
-        String[] strArr1 = {"식료품"};
+        String[] strArr3 = {"식료품", "도서", "커피"};
+        String[] strArr1 = {"식료품", "도서"};
         List<String> result3 = new ArrayList<>(Arrays.asList(strArr3));
         List<String> result1 = new ArrayList<>(Arrays.asList(strArr1));
 
@@ -49,7 +49,8 @@ public class BankServiceTest {
         assertThat(bankService.monthlyExpense(Month.FEBRUARY)).isEqualTo(-37000);
         assertThat(bankService.categoryAmount("커피")).isEqualTo(-34000);
         assertThat(bankService.monthlyCountAmount(Month.FEBRUARY)).isEqualTo(6);
-        assertThat(bankService.topExpenseAmount(3)).isEqualTo(result1);
+        assertThat(bankService.topThreeExpenseAmount(3)).isEqualTo(result3);
+        assertThat(bankService.topExpenseAmount()).isEqualTo(result1);
 
     }
 

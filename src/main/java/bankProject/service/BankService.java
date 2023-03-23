@@ -159,22 +159,7 @@ public class BankService {
     }
 
     // 지출이 높은 상위 3건
-    public List<String> topThreeExpenseAmount() {
-        List<String> result = bankTransactions.stream()
-                .filter(amount -> amount.getAmount() < 0)
-                .sorted(Comparator.comparing(BankTransaction::getAmount))
-                .map(BankTransaction::getInfo)
-                .limit(3)
-                .collect(Collectors.toList());
-
-        log.info(result.toString());
-
-        return result;
-    }
-
-    // 지출이 가장 많은 항목
-    public List<String> topExpenseAmount(int count) {
-
+    public List<String> topThreeExpenseAmount(int count) {
         List<String> result = bankTransactions.stream()
                 .filter(amount -> amount.getAmount() < 0)
                 .sorted(Comparator.comparing(BankTransaction::getAmount))
@@ -183,6 +168,26 @@ public class BankService {
                 .collect(Collectors.toList());
 
         log.info(result.toString());
+
+        return result;
+    }
+
+    // 지출이 가장 많은 항목
+    // 지출 가격이 많아야 같아도 같이 출력
+    public String topExpenseAmount() {
+
+        String result = String.valueOf(bankTransactions.stream()
+                .filter(transaction -> transaction.getAmount() < 0)
+                .sorted(Comparator.comparing(BankTransaction::getAmount).reversed())
+                .collect(Collectors.groupingBy(BankTransaction::getAmount))
+                .entrySet().stream()
+                .min(Comparator.comparingInt(entry -> entry.getKey()))
+                .map(transaction -> transaction.getValue().stream()
+                        .map(BankTransaction::getInfo)
+                        .collect(Collectors.toList()))
+                .orElse(new ArrayList<>()));
+
+         log.info(result.toString());
 
         return result;
     }
@@ -214,7 +219,6 @@ public class BankService {
         log.info(String.valueOf(intSummaryStatistics.getMax()));
         log.info(String.valueOf(intSummaryStatistics.getMin()));
         log.info(String.valueOf(intSummaryStatistics.getAverage()));
-
 
 //        return new SummaryStatistics(intSummaryStatistics.getSum(),
 //                intSummaryStatistics.getMax(),

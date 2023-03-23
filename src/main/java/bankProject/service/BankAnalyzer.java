@@ -52,7 +52,8 @@ public class BankAnalyzer {
         bankService.monthlyExpense(Month.FEBRUARY);
         bankService.categoryAmount("커피");
         bankService.monthlyCountAmount(Month.FEBRUARY);
-        bankService.topExpenseAmount(3);
+        bankService.topThreeExpenseAmount(3);
+        bankService.topExpenseAmount();
 
 
         /* 별도의 클래스를 만들지 않고, 람다 표현식으로 이름없이 인터페이스 구현 객체를 코드 블록형태로 전달 */
