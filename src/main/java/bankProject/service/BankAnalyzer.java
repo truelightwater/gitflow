@@ -32,9 +32,10 @@ public class BankAnalyzer {
             lines = Files.readAllLines(path);
         } catch (FileNotFoundException | AccessDeniedException exception) {
             log.error("파일을 찾을 수 없거나 액세스 권한이 없습니다.", exception);
+//            System.out.println("파일을 찾을 수 없거나 액세스 권한이 없습니다.");
+//            exception.printStackTrace();
         } catch (IOException e) {
-            log.error("파일을 읽을 수 없습니다. ", e);
-            throw new RuntimeException(e);
+            log.error("파일을 읽을 수 없습니다.", e);
         }
 
         // 데이터 파싱

@@ -45,10 +45,12 @@ public class BankServiceTest {
         assertThat(bankService.totalAmount()).isEqualTo(5981000);
         assertThat(bankService.incomeAmount()).isEqualTo(6240000);
         assertThat(bankService.expenseAmount()).isEqualTo(-259000);
+
         assertThat(bankService.monthlyAmount(Month.JANUARY)).isEqualTo(-117000);
         assertThat(bankService.monthlyIncome(Month.FEBRUARY)).isEqualTo(6240000);
         assertThat(bankService.monthlyExpense(Month.FEBRUARY)).isEqualTo(-37000);
         assertThat(bankService.categoryAmount("커피")).isEqualTo(-34000);
+
         assertThat(bankService.monthlyCountAmount(Month.FEBRUARY)).isEqualTo(6);
         assertThat(bankService.topThreeExpenseAmount(3)).isEqualTo(result3);
         assertThat(bankService.topExpenseAmount()).isEqualTo("[식료품, 도서]");

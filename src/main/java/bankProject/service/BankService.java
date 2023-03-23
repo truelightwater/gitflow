@@ -15,7 +15,8 @@ public class BankService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     public BankService(List<BankTransaction> bankTransactions) {
-         this.bankTransactions = bankTransactions;
+
+        this.bankTransactions = bankTransactions;
     }
 
     // 총 입금, 출금 내역
@@ -77,7 +78,7 @@ public class BankService {
                         }).sum();
 
         // 데이터가 없는 경우 - 2
-        int monthlyTotal2 = bankTransactions.stream()
+        Integer monthlyTotal2 = bankTransactions.stream()
                 .filter(transaction -> transaction.getDate().getMonth() == month)
                 .map(transaction -> Optional.ofNullable(transaction.getAmount()))
                 .filter(Optional::isPresent)
@@ -85,7 +86,7 @@ public class BankService {
                 .sum();
 
 
-        log.info(String.valueOf(monthlyTotal));
+        log.info(String.valueOf(monthlyTotal2));
 
         return monthlyTotal;
     }
