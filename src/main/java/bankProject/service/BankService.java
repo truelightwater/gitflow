@@ -187,7 +187,7 @@ public class BankService {
                         .collect(Collectors.toList()))
                 .orElse(new ArrayList<>()));
 
-         log.info(result.toString());
+        log.info(result.toString());
 
         return result;
     }

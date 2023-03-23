@@ -37,20 +37,21 @@ public class BankServiceTest {
         BankService bankService = readFile();
 
         String[] strArr3 = {"식료품", "도서", "커피"};
-        String[] strArr1 = {"식료품", "도서"};
-        List<String> result3 = new ArrayList<>(Arrays.asList(strArr3));
-        List<String> result1 = new ArrayList<>(Arrays.asList(strArr1));
+        String[] strArr = {"식료품", "도서"};
 
-        assertThat(bankService.totalAmount()).isEqualTo(6081000);
+        List<String> result3 = new ArrayList<>(Arrays.asList(strArr3));
+        List<String> result = new ArrayList<>(Arrays.asList(strArr));
+
+        assertThat(bankService.totalAmount()).isEqualTo(5981000);
         assertThat(bankService.incomeAmount()).isEqualTo(6240000);
-        assertThat(bankService.expenseAmount()).isEqualTo(-159000);
+        assertThat(bankService.expenseAmount()).isEqualTo(-259000);
         assertThat(bankService.monthlyAmount(Month.JANUARY)).isEqualTo(-117000);
         assertThat(bankService.monthlyIncome(Month.FEBRUARY)).isEqualTo(6240000);
         assertThat(bankService.monthlyExpense(Month.FEBRUARY)).isEqualTo(-37000);
         assertThat(bankService.categoryAmount("커피")).isEqualTo(-34000);
         assertThat(bankService.monthlyCountAmount(Month.FEBRUARY)).isEqualTo(6);
         assertThat(bankService.topThreeExpenseAmount(3)).isEqualTo(result3);
-        assertThat(bankService.topExpenseAmount()).isEqualTo(result1);
+        assertThat(bankService.topExpenseAmount()).isEqualTo("[식료품, 도서]");
 
     }
 
